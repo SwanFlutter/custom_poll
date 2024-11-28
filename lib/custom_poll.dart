@@ -24,24 +24,27 @@ export 'package:custom_poll/src/tools/votes_text_style.dart';
 ///
 /// Example usage:
 /// ```dart
+/// CustomPoll(
+///   title: 'What is your favorite color?',
+///   options: ['Red', 'Green', 'Blue'],
+///   allowReselection: true,
+///   showPercentages: true,
+///   startDate: DateTime.now(),
+///   endDate: DateTime.now().add(Duration(days: 1)),
+///   backgroundDecoration: BoxDecoration(
+///     color: Colors.white,
+///     borderRadius: BorderRadius.circular(10),
+///   ),
+///   votesText: 'Votes',
+///   createdBy: 'John Doe',
+///   userToVote: 'John Doe',
+///   private: false,
+///   loadingWidget: CircularProgressIndicator(),
+///   onOptionSelected: (index) {
+///}
+///)
 ///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
+
 class CustomPoll extends StatefulWidget {
   /// Whether users can reselect an option after voting.
   final bool allowReselection;
@@ -143,10 +146,8 @@ class CustomPoll extends StatefulWidget {
     this.height,
     this.width,
     this.showTimer = false,
-  })  : assert(options.length <= maximumOptions!,
-            'Maximum $maximumOptions options allowed'),
-        assert(maximumOptions != null && maximumOptions > 0,
-            'maximumOptions must be greater than zero.');
+  })  : assert(options.length <= maximumOptions!, 'Maximum $maximumOptions options allowed'),
+        assert(maximumOptions != null && maximumOptions > 0, 'maximumOptions must be greater than zero.');
 
   static Widget polls({
     final bool allowReselection = false,
@@ -253,8 +254,7 @@ class CustomPoll extends StatefulWidget {
     final Color? progressColor = Colors.blue,
 
     /// The color of the background of the progress bar.
-    final Color? backgroundProgressColor =
-        const Color.fromRGBO(224, 224, 224, 1),
+    final Color? backgroundProgressColor = const Color.fromRGBO(224, 224, 224, 1),
 
     /// The total number of votes cast in the poll.
     int? totalVotes,
@@ -441,8 +441,7 @@ class _CustomPollState extends State<CustomPoll> {
     }
 
     // Update remaining time and clickable status
-    if (now.isAfter(widget.startDate.subtract(const Duration(seconds: 1))) &&
-        now.isBefore(widget.endDate.add(const Duration(seconds: 1)))) {
+    if (now.isAfter(widget.startDate.subtract(const Duration(seconds: 1))) && now.isBefore(widget.endDate.add(const Duration(seconds: 1)))) {
       remainingTime = widget.endDate.difference(now);
       newIsClickable = true;
     } else if (now.isBefore(widget.startDate)) {
@@ -454,9 +453,7 @@ class _CustomPollState extends State<CustomPoll> {
     }
 
     String newFormattedTime = PollTimerManager.formatTimer(remainingTime);
-    if (isClickable != newIsClickable ||
-        formattedTime != newFormattedTime ||
-        _showTimer != widget.showTimer) {
+    if (isClickable != newIsClickable || formattedTime != newFormattedTime || _showTimer != widget.showTimer) {
       isClickable = newIsClickable;
       formattedTime = newFormattedTime;
 
@@ -517,12 +514,8 @@ class _CustomPollState extends State<CustomPoll> {
             ignoring: !isClickable,
             child: LayoutBuilder(builder: (context, constraints) {
               return Container(
-                height: widget.height != 0
-                    ? widget.height
-                    : constraints.maxHeight * 0.4,
-                width: widget.width != 0
-                    ? widget.width
-                    : constraints.maxWidth * 0.8,
+                height: widget.height != 0 ? widget.height : constraints.maxHeight * 0.4,
+                width: widget.width != 0 ? widget.width : constraints.maxWidth * 0.8,
                 decoration: widget.backgroundDecoration ?? decoration,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -530,20 +523,14 @@ class _CustomPollState extends State<CustomPoll> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: widget.allStyle?.titleStyle!.alignment ??
-                            Alignment.centerLeft,
+                        alignment: widget.allStyle?.titleStyle!.alignment ?? Alignment.centerLeft,
                         child: SelectableText(
                           maxLines: widget.allStyle?.titleStyle!.maxLines,
                           minLines: widget.allStyle?.titleStyle!.minLines,
-                          textAlign: widget.allStyle?.titleStyle!.textAlign ??
-                              TextAlign.center,
-                          textDirection:
-                              widget.allStyle?.titleStyle!.textDirection ??
-                                  TextDirection.ltr,
+                          textAlign: widget.allStyle?.titleStyle!.textAlign ?? TextAlign.center,
+                          textDirection: widget.allStyle?.titleStyle!.textDirection ?? TextDirection.ltr,
                           widget.title,
-                          style: widget.allStyle?.titleStyle!.style ??
-                              const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                          style: widget.allStyle?.titleStyle!.style ?? const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(height: widget.heightBetweenTitleAndOptions),
@@ -551,10 +538,7 @@ class _CustomPollState extends State<CustomPoll> {
                         int index = entry.key;
                         String option = entry.value;
                         return Padding(
-                          padding: EdgeInsets.only(
-                              bottom: widget.allStyle?.optionStyle
-                                      ?.heightBetweenOptions ??
-                                  8),
+                          padding: EdgeInsets.only(bottom: widget.allStyle?.optionStyle?.heightBetweenOptions ?? 8),
                           child: PollOptionWidget(
                             dynamicPoll: widget,
                             option: option,
@@ -568,22 +552,15 @@ class _CustomPollState extends State<CustomPoll> {
                           ),
                         );
                       }),
-                      SizedBox(
-                          height: widget.allStyle?.votesTextStyle?.paddingTop ??
-                              10),
+                      SizedBox(height: widget.allStyle?.votesTextStyle?.paddingTop ?? 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
-                            alignment:
-                                widget.allStyle?.votesTextStyle?.alignment ??
-                                    Alignment.centerLeft,
+                            alignment: widget.allStyle?.votesTextStyle?.alignment ?? Alignment.centerLeft,
                             child: Text(
                               '${widget.votesText} ${totalVote()}',
-                              style: widget.allStyle?.votesTextStyle?.style ??
-                                  const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
+                              style: widget.allStyle?.votesTextStyle?.style ?? const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
@@ -598,8 +575,7 @@ class _CustomPollState extends State<CustomPoll> {
         if (_showTimer && remainingTime.inSeconds > 0)
           Positioned.fill(
             child: Align(
-              alignment:
-                  widget.allStyle?.showTimeStyle?.alignment ?? Alignment.center,
+              alignment: widget.allStyle?.showTimeStyle?.alignment ?? Alignment.center,
               child: Container(
                 height: showTimeStyle?.height,
                 width: showTimeStyle?.width,
@@ -611,8 +587,7 @@ class _CustomPollState extends State<CustomPoll> {
                     ),
                 child: Text(
                   '${widget.allStyle?.showTimeStyle?.text ?? "Time remaining: "} $formattedTime',
-                  style: widget.allStyle?.showTimeStyle?.style ??
-                      const TextStyle(color: Colors.white, fontSize: 18),
+                  style: widget.allStyle?.showTimeStyle?.style ?? const TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),
@@ -651,9 +626,7 @@ class ColumnWidget extends StatelessWidget {
                       text: widget.startDate.toLocal().toString().split(' ')[0],
                     )
                   ],
-                  style: widget.allStyle?.dateStyle?.textStyle ??
-                      const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
+                  style: widget.allStyle?.dateStyle?.textStyle ?? const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ],
             ),
@@ -669,9 +642,7 @@ class ColumnWidget extends StatelessWidget {
                       text: widget.endDate.toLocal().toString().split(' ')[0],
                     )
                   ],
-                  style: widget.allStyle?.dateStyle?.textStyle ??
-                      const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
+                  style: widget.allStyle?.dateStyle?.textStyle ?? const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ],
             ),
