@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:custom_poll/custom_poll.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -62,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CustomPoll(
+                  /*   CustomPoll(
                     title: 'کدام زبان برنامه‌نویسی محبوب‌تر است؟',
                     private: false,
                     allowReselection: false,
@@ -75,8 +72,8 @@ class _HomePageState extends State<HomePage> {
                       'سی‌شارپ',
                     ],
                     totalVotes: 0,
-                    startDate: DateTime.now().add(const Duration(seconds: 10)),
-                    endDate: DateTime.now().add(const Duration(minutes: 1)),
+                    startDate: DateTime.now().add(const Duration(seconds: 5)),
+                    endDate: DateTime.now().add(const Duration(seconds: 10)),
                     maximumOptions: 20,
                     backgroundDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
@@ -149,28 +146,30 @@ class _HomePageState extends State<HomePage> {
                     ),
                     title: 'What is your favorite color?  ef ewf wewerwetwerwrweret  t t wtwetrw t  4twtrw4 ttttetertt   4tetree t ertert et ert e 543eter te t ert ter te4 t rret54e te tre te  ert 4 3tertert',
                     options: const ['Reddfdfd', 'Bluefdfdfd', 'Greendfdfdfd sd sad sadadsadadsadsa s adas wdwdawd aw', 'Yellowfdfdfd'],
-                    startDate: DateTime.now().add(const Duration(seconds: 10)),
+                    startDate: DateTime.now().add(const Duration(seconds: 7)),
                     endDate: DateTime.now().add(const Duration(minutes: 4)),
                     onOptionSelected: (int selectedOption) {
                       if (kDebugMode) {
                         print('Selected option: $selectedOption');
                       }
                     },
-                  ),
+                  ),*/
+
                   const SizedBox(height: 20),
-                  CustomPoll.radioBottomPolls(
+                  /*  CustomPoll.radioBottomPolls(
                     title: 'How old are you?',
                     options: const ['18-25', '26-30', '31-35', '36-40', '41-45', '46-50', '51-55', '56-60', '61-65', '66-70'],
                     onOptionSelected: (int index) {},
                     allowReselection: true,
-                  ),
+                  ),*/
+
                   const SizedBox(height: 20),
-                  CustomPoll.polls(
+                  /*  CustomPoll.polls(
                     title: 'How old are you?',
                     options: ['18-25', '26-30', '31-35', '36-40', '41-45', '46-50', '51-55', '56-60', '61-65', '66-70'],
                     onOptionSelected: (int index) {},
                     allowReselection: false,
-                  ),
+                  ),*/
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.all(16.0),

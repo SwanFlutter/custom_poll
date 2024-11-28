@@ -14,6 +14,30 @@ Private Polls: Create private polls that only specific users can vote on.
 
 Stream Integration: Integrate with a stream to handle vote updates and send data to a server.
 
+- CustomPoll
+
+
+```dart
+```
+
+- CustomPoll.polls
+
+
+```dart
+```
+
+- CustomPoll.radioBottomPolls
+
+
+```dart
+```
+
+- CustomPoll.viewOnlyPollWidget
+
+
+```dart
+```
+
 ## Getting Started
 
 To use this package, add custom_poll as a dependency in your pubspec.yaml file.
@@ -98,44 +122,44 @@ class _MyPageState extends State<MyPage> {
 ```
 
 ## Example Parameters
-title: The title of the poll.
+- -title: The title of the poll.
 
-options: A list of options for the poll.
+- -options: A list of options for the poll.
 
-startDate: The start date of the poll.
+- -startDate: The start date of the poll.
 
-endDate: The end date of the poll.
+- -endDate: The end date of the poll.
 
-onOptionSelected: A callback function that is called when an option is selected.
+- -onOptionSelected: A callback function that is called when an option is selected.
 
-voteStream: A stream controller for handling vote updates.
+- -voteStream: A stream controller for handling vote updates.
 
-- Additional Parameters
+## Additional Parameters
 
-allowReselection: Whether users can reselect an option after voting.
+- -allowReselection: Whether users can reselect an option after voting.
 
-showPercentages: Whether to display the percentage of votes for each option.
+- -showPercentages: Whether to display the percentage of votes for each option.
 
-backgroundDecoration: The decoration applied to the background of the poll.
+- -backgroundDecoration: The decoration applied to the background of the poll.
 
-heightBetweenTitleAndOptions: The height between the title and the options.
+- -heightBetweenTitleAndOptions: The height between the title and the options.
 
-votesText: The text displayed next to the vote count.
+- -votesText: The text displayed next to the vote count.
 
-createdBy: The name of the user who created the poll.
+- -createdBy: The name of the user who created the poll.
 
-userToVote: The name of the user who is allowed to vote.
+- -userToVote: The name of the user who is allowed to vote.
 
-private: Whether the poll is private.
+- -private: Whether the poll is private.
 
-loadingWidget: The widget to display while the poll is loading.
+- -loadingWidget: The widget to display while the poll is loading.
 
-allStyle: The styles to apply to the poll.
+- -allStyle: The styles to apply to the poll.
 
-maximumOptions: The maximum number of options allowed in the poll.
+- -maximumOptions: The maximum number of options allowed in the poll.
 
-height: The height of the poll widget.
+- -height: The height of the poll widget.
 
-width: The width of the poll widget.
+- -width: The width of the poll widget.
 
-showTimer: Whether to show a timer for the poll duration.
+- -showTimer: Whether to show a timer for the poll duration.

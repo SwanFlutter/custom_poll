@@ -94,10 +94,8 @@ class RadioBottomPolls extends StatefulWidget {
     this.progressColor = Colors.blue,
     this.backgroundProgressColor = const Color.fromRGBO(224, 224, 224, 1),
     double? heightBetweenOptions,
-  })  : assert(options.length <= maximumOptions!,
-            'Maximum $maximumOptions options allowed'),
-        assert(maximumOptions != null && maximumOptions > 0,
-            'maximumOptions must be greater than zero.');
+  })  : assert(options.length <= maximumOptions!, 'Maximum $maximumOptions options allowed'),
+        assert(maximumOptions != null && maximumOptions > 0, 'maximumOptions must be greater than zero.');
 
   @override
   State<RadioBottomPolls> createState() => _RadioBottomPollsState();
@@ -177,30 +175,23 @@ class _RadioBottomPollsState extends State<RadioBottomPolls> {
   // Decoration for the poll widget
   Decoration decoration = BoxDecoration(
     borderRadius: BorderRadius.circular(24.0), // Rounded corners
-    color: Colors.grey.shade200, // Background color
+    color: Colors.grey.shade600, // Background color
     border: Border.all(style: BorderStyle.none), // No border
   );
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          widget.backgroundDecoration ?? // Use provided decoration or default
-              BoxDecoration(
-                color: Colors.white, // Default background color
-                borderRadius: BorderRadius.circular(12), // Rounded corners
-              ),
+      decoration: widget.backgroundDecoration ?? // Use provided decoration or default
+          decoration,
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start, // Align children to the start
+        crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0), // Padding around title
             child: Text(
               widget.title, // Display poll title
-              style: widget.allStyle?.titleStyle?.style ??
-                  const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold), // Title style
+              style: widget.allStyle?.titleStyle?.style ?? const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Title style
             ),
           ),
           ...widget.options.asMap().entries.map((entry) {
@@ -208,13 +199,11 @@ class _RadioBottomPollsState extends State<RadioBottomPolls> {
             String option = entry.value; // Get option text
             return RadioBottomPollOption(
               option: option, // Pass option text
-              isSelected:
-                  selectedOption == index, // Check if option is selected
+              isSelected: selectedOption == index, // Check if option is selected
               onTap: () => _selectOption(index), // Handle option tap
               votes: votes[index] ?? 0, // Get vote count for option
               totalVotes: totalVote(), // Pass total votes
-              showPercentages: widget.showPercentages &&
-                  hasVoted, // Show percentages if applicable
+              showPercentages: widget.showPercentages && hasVoted, // Show percentages if applicable
               hasVoted: hasVoted, // Pass whether user has voted
               index: index, // Pass option index
               radioBottomPolls: widget, // Pass parent widget
@@ -225,10 +214,7 @@ class _RadioBottomPollsState extends State<RadioBottomPolls> {
               padding: const EdgeInsets.all(16.0), // Padding around votes text
               child: Text(
                 '${widget.votesText} ${totalVote()}', // Display votes text and total votes
-                style: widget.allStyle?.votesTextStyle?.style ??
-                    const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold), // Votes text style
+                style: widget.allStyle?.votesTextStyle?.style ?? const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), // Votes text style
               ),
             ),
         ],
