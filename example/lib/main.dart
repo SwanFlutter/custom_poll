@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:custom_poll/custom_poll.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   CustomPoll(
                     title: 'کدام زبان برنامه‌نویسی محبوب‌تر است؟',
-                    private: true,
+                    private: false,
                     allowReselection: false,
                     showPercentages: false,
                     showTimer: false,
@@ -73,10 +74,9 @@ class _HomePageState extends State<HomePage> {
                       'پایتون',
                       'سی‌شارپ',
                     ],
-                    votes: const {0: 10, 1: 20, 2: 15, 3: 5},
-                    totalVotes: 50,
-                    startDate: DateTime.now().add(const Duration(hours: 1)),
-                    endDate: DateTime.now().add(const Duration(days: 1)),
+                    totalVotes: 0,
+                    startDate: DateTime.now().add(const Duration(seconds: 10)),
+                    endDate: DateTime.now().add(const Duration(minutes: 1)),
                     maximumOptions: 20,
                     backgroundDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
@@ -130,10 +130,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 50),
                   CustomPoll(
-                    private: true,
-                    allowReselection: false,
+                    private: false,
+                    allowReselection: true,
                     showPercentages: false,
-                    showTimer: false,
+                    showTimer: true,
                     allStyle: Styles(
                       titleStyle: TitleStyle(textDirection: TextDirection.ltr, alignment: Alignment.centerLeft),
                       optionStyle: OptionStyle(
@@ -149,13 +149,27 @@ class _HomePageState extends State<HomePage> {
                     ),
                     title: 'What is your favorite color?  ef ewf wewerwetwerwrweret  t t wtwetrw t  4twtrw4 ttttetertt   4tetree t ertert et ert e 543eter te t ert ter te4 t rret54e te tre te  ert 4 3tertert',
                     options: const ['Reddfdfd', 'Bluefdfdfd', 'Greendfdfdfd sd sad sadadsadadsadsa s adas wdwdawd aw', 'Yellowfdfdfd'],
-                    votes: const {0: 5, 1: 10, 2: 3, 3: 7},
-                    totalVotes: 25,
-                    startDate: DateTime.now().add(const Duration(days: 1)),
+                    startDate: DateTime.now().add(const Duration(seconds: 10)),
                     endDate: DateTime.now().add(const Duration(minutes: 4)),
                     onOptionSelected: (int selectedOption) {
-                      print('Selected option: $selectedOption');
+                      if (kDebugMode) {
+                        print('Selected option: $selectedOption');
+                      }
                     },
+                  ),
+                  const SizedBox(height: 20),
+                  CustomPoll.radioBottomPolls(
+                    title: 'How old are you?',
+                    options: const ['18-25', '26-30', '31-35', '36-40', '41-45', '46-50', '51-55', '56-60', '61-65', '66-70'],
+                    onOptionSelected: (int index) {},
+                    allowReselection: true,
+                  ),
+                  const SizedBox(height: 20),
+                  CustomPoll.polls(
+                    title: 'How old are you?',
+                    options: ['18-25', '26-30', '31-35', '36-40', '41-45', '46-50', '51-55', '56-60', '61-65', '66-70'],
+                    onOptionSelected: (int index) {},
+                    allowReselection: false,
                   ),
                   const SizedBox(height: 20),
                   Padding(
@@ -192,284 +206,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-class ViewOnlyPollWidget {}
-
-/*class CustomCarousel extends StatefulWidget {
-  const CustomCarousel({super.key});
-
-  @override
-  _CustomCarouselState createState() => _CustomCarouselState();
-}
-
-class _CustomCarouselState extends State<CustomCarousel> {
-  final PageController _carouselController = PageController(viewportFraction: 0.2);
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: PageView.builder(
-        controller: _carouselController,
-        itemCount: 10,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index; // ایندکس فعال را به‌روزرسانی کنید
-          });
-        },
-        itemBuilder: (context, index) {
-          final isActive = index == _currentIndex; // بررسی فعال بودن آیتم
-          return AnimatedBuilder(
-            animation: _carouselController,
-            builder: (context, child) {
-              double value = 0.0;
-              if (_carouselController.position.haveDimensions) {
-                value = _carouselController.page! - index;
-                value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-              }
-              return Transform.scale(
-                scale: Curves.easeInOut.transform(value), // تغییر اندازه بر اساس انیمیشن
-                child: child,
-              );
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.network(
-                  'https://picsum.photos/300/${200 + (index * 10)}',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class Carousel extends StatelessWidget {
-  const Carousel({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    final CarouselSliderController carouselController = CarouselSliderController();
-
-    return CarouselSlider(
-      carouselController: carouselController,
-      items: images
-          .map((i) => Builder(
-                builder: (context) => Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Image.network(
-                    i,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ))
-          .toList(),
-      options: CarouselOptions(
-        height: 400, // Carousel slider height
-        autoPlay: false,
-        enlargeCenterPage: true,
-        viewportFraction: 0.2,
-        aspectRatio: 2.0,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        autoPlayCurve: Curves.fastOutSlowIn,
-        scrollDirection: Axis.horizontal,
-      ),
-    );
-  }
-}
-
-class CarouselExample extends StatefulWidget {
-  const CarouselExample({super.key});
-
-  @override
-  _CarouselExampleState createState() => _CarouselExampleState();
-}
-
-class _CarouselExampleState extends State<CarouselExample> {
-  final PageController _pageController = PageController(viewportFraction: 0.4, initialPage: 0);
-  double _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 200, // ارتفاع مناسب برای کروسل
-        child: PageView.builder(
-          controller: _pageController,
-          itemCount: 4, // تعداد آیتم‌ها
-          itemBuilder: (context, index) {
-            double scale = (_currentPage - index).abs() <= 1 ? 1 - (_currentPage - index).abs() * 0.3 : 0.7;
-            return Transform.scale(
-              scale: scale,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: index.isEven ? Colors.blue : Colors.orange,
-                ),
-                child: ClipRRect(borderRadius: BorderRadius.circular(5), child: Image.network(images[index], fit: BoxFit.fitHeight)),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-const List<String> images = [
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-  "https://i.pravatar.cc/300",
-];
-
-class ImageCarousel extends StatefulWidget {
-  const ImageCarousel({super.key});
-
-  @override
-  _ImageCarouselState createState() => _ImageCarouselState();
-}
-
-class _ImageCarouselState extends State<ImageCarousel> {
-  int selectedIndex = 0;
-  final PageController _pageController = PageController(initialPage: 0);
-  double _currentPage = 0;
-
-  @override
-  void initState() {
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const double itemHeight = 80; // ارتفاع معمولی تصاویر
-    const double selectedItemHeight = 120; // ارتفاع تصویر انتخاب‌شده
-
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            // ردیف بالایی تصاویر
-            SizedBox(
-              height: selectedItemHeight, // ارتفاع بخش تصاویر بالا
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    double scale = (_currentPage - index).abs() <= 1 ? 1 - (_currentPage - index).abs() * 0.3 : 0.7;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                        _pageController.animateToPage(
-                          index,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Transform.scale(
-                        scale: scale,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          width: MediaQuery.of(context).size.width / 4 - 16,
-                          height: selectedIndex == index ? selectedItemHeight : itemHeight,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: selectedIndex == index ? Colors.blue : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Image.network(
-                            images[index],
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            // ردیف پایینی تصاویر (PageView)
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: 4,
-                onPageChanged: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: Image.network(
-                      images[index],
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/

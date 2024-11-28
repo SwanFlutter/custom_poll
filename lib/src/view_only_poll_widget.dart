@@ -138,74 +138,103 @@ class ViewOnlyPollWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('yyyy/MM/dd HH:mm');
+    final dateFormat =
+        DateFormat('yyyy/MM/dd HH:mm'); // Format for displaying dates
     return Card(
-      elevation: 4,
-      margin: const EdgeInsets.all(12),
+      elevation: 4, // Elevation for shadow effect
+      margin: const EdgeInsets.all(12), // Margin around the card
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12), // Rounded corners for the card
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16), // Padding inside the card
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Align children to the start
           children: [
             // Poll Title
             Text(
-              title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              title, // Display the poll title
+              style: const TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.bold), // Title style
             ),
-            SizedBox(height: heightBetweenTitleAndOptions),
+            SizedBox(
+                height:
+                    heightBetweenTitleAndOptions), // Space between title and options
 
             // Poll Options
             ...options.asMap().entries.map((entry) {
-              final index = entry.key;
-              final option = entry.value;
-              final optionVotes = votes[index] ?? 0;
-              final percentage = totalVotes > 0 ? (optionVotes / totalVotes * 100) : 0;
+              final index = entry.key; // Get the index of the option
+              final option = entry.value; // Get the option text
+              final optionVotes =
+                  votes[index] ?? 0; // Get the votes for the option
+              final percentage = totalVotes > 0
+                  ? (optionVotes / totalVotes * 100)
+                  : 0; // Calculate percentage
 
               return Padding(
-                padding: EdgeInsets.only(bottom: heightBetweenOptions ?? 12),
+                padding: EdgeInsets.only(
+                    bottom:
+                        heightBetweenOptions ?? 12), // Space between options
                 child: Container(
-                  height: pollOptionsHeight,
+                  height: pollOptionsHeight, // Height of the option container
                   decoration: BoxDecoration(
-                    color: pollOptionsFillColor,
-                    borderRadius: pollOptionsBorderRadius ?? BorderRadius.circular(8),
-                    border: pollOptionsBorder ?? Border.all(color: Colors.grey, width: 1.0),
+                    color:
+                        pollOptionsFillColor, // Background color of the option
+                    borderRadius: pollOptionsBorderRadius ??
+                        BorderRadius.circular(8), // Border radius
+                    border: pollOptionsBorder ??
+                        Border.all(
+                            color: Colors.grey, width: 1.0), // Border style
                   ),
                   child: Stack(
                     children: [
                       // Progress Background
                       FractionallySizedBox(
-                        widthFactor: percentage / 100,
+                        widthFactor:
+                            percentage / 100, // Width based on percentage
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: pollOptionsBorderRadius ?? BorderRadius.circular(8),
-                            color: votedProgressColor?.withOpacity(0.3) ?? Colors.blue.withOpacity(0.3),
+                            borderRadius: pollOptionsBorderRadius ??
+                                BorderRadius.circular(8), // Border radius
+                            color: votedProgressColor?.withOpacity(0.3) ??
+                                Colors.blue.withOpacity(0.3), // Progress color
                           ),
                         ),
                       ),
                       // Option Text and Percentage
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12), // Padding for option text
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment
+                              .center, // Center the content vertically
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween, // Space between text and percentage
                               children: [
                                 // Option Text
                                 Text(
-                                  option,
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  option, // Display the option text
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight:
+                                          FontWeight.w500), // Option text style
+                                  overflow:
+                                      TextOverflow.ellipsis, // Handle overflow
+                                  maxLines: 1, // Limit to one line
                                 ),
                                 // Percentage
-                                if (showPercentages)
+                                if (showPercentages) // Show percentage if enabled
                                   Text(
-                                    '${percentage.toStringAsFixed(1)}%',
-                                    style: votedPercentageTextStyle ?? const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    '${percentage.toStringAsFixed(1)}%', // Display percentage
+                                    style: votedPercentageTextStyle ??
+                                        const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors
+                                                .black87), // Percentage text style
                                   ),
                               ],
                             ),
@@ -218,24 +247,32 @@ class ViewOnlyPollWidget extends StatelessWidget {
               );
             }),
 
-            const Divider(height: 24),
+            const Divider(
+                height: 24), // Divider between options and meta information
 
             // Meta Information
-            if (metaWidget != null) metaWidget!,
-            const SizedBox(height: 8),
+            if (metaWidget != null)
+              metaWidget!, // Display meta widget if provided
+            const SizedBox(height: 8), // Space after meta information
 
             // Total Votes and Dates
             Text(
-              '$totalVotes $votesText',
-              style: votesTextStyle ?? const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black87),
+              '$totalVotes $votesText', // Display total votes
+              style: votesTextStyle ??
+                  const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87), // Votes text style
             ),
             Text(
-              'Start : ${dateFormat.format(startDate)}',
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
+              'Start : ${dateFormat.format(startDate)}', // Display start date
+              style: const TextStyle(
+                  fontSize: 12, color: Colors.black54), // Start date style
             ),
             Text(
-              'Ends : ${dateFormat.format(endDate)}',
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
+              'Ends : ${dateFormat.format(endDate)}', // Display end date
+              style: const TextStyle(
+                  fontSize: 12, color: Colors.black54), // End date style
             ),
           ],
         ),

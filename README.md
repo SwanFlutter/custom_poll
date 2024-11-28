@@ -1,32 +1,35 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## CustomPoll Package
+This package provides a customizable and dynamic poll widget for Flutter applications. It allows you to create polls with various options, styles, and behaviors, making it easy to integrate polls into your app.
 
 ## Features
+Customizable Poll Widget: Create polls with customizable titles, options, and styles.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Dynamic Voting: Users can vote and see real-time updates.
 
-## Getting started
+Reselection Option: Allow or disallow users to change their votes.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Timer Support: Display a countdown timer for the poll duration.
 
-## Usage
+Private Polls: Create private polls that only specific users can vote on.
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Stream Integration: Integrate with a stream to handle vote updates and send data to a server.
+
+## Getting Started
+
+To use this package, add custom_poll as a dependency in your pubspec.yaml file.
+
+```yaml
+dependencies:
+  custom_poll: ^1.0.0
+```
+Then, import the package in your Dart code:
+
+```yaml
+import 'package:custom_poll/custom_poll.dart';
+```
+
+- Usage
+Here is a basic example of how to use the CustomPoll widget in your Flutter app:
 
 ```dart
 class MyPage extends StatefulWidget {
@@ -35,16 +38,15 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
- 
- final voteStreamController = StreamController<VoteData>.broadcast();
+  final voteStreamController = StreamController<VoteData>.broadcast();
 
   @override
   void initState() {
     super.initState();
-   voteStreamController.stream.listen((voteData) {
-    // ارسال به سرور
-    _sendToServer(voteData);
-  });
+    voteStreamController.stream.listen((voteData) {
+      // Send vote data to the server
+      _sendToServer(voteData);
+    });
   }
 
   void _handleVoteChange() {
@@ -55,9 +57,16 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DynamicPoll(
-        onVoteChanged: voteStreamController,
-        // سایر پارامترها
+      body: CustomPoll(
+        title: 'What is your favorite color?',
+        options: ['Red', 'Blue', 'Green', 'Yellow'],
+        startDate: DateTime.now(),
+        endDate: DateTime.now().add(Duration(hours: 24)),
+        onOptionSelected: (index) {
+          print('Selected option: $index');
+        },
+        voteStream: voteStreamController,
+        // Other parameters
       ),
     );
   }
@@ -68,29 +77,65 @@ class _MyPageState extends State<MyPage> {
     super.dispose();
   }
 
- Future<void> _sendToServer(VoteData voteData) async {
-  try {
-    final response = await http.post(
-      Uri.parse('YOUR_API_ENDPOINT'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(voteData.toJson()),
-    );
+  Future<void> _sendToServer(VoteData voteData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('YOUR_API_ENDPOINT'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(voteData.toJson()),
+      );
 
-    if (response.statusCode == 200) {
-      print('Vote data sent successfully');
-    } else {
-      print('Failed to send vote data');
+      if (response.statusCode == 200) {
+        print('Vote data sent successfully');
+      } else {
+        print('Failed to send vote data');
+      }
+    } catch (e) {
+      print('Error sending vote data: $e');
     }
-  } catch (e) {
-    print('Error sending vote data: $e');
   }
-}
-
 }
 ```
 
-## Additional information
+## Example Parameters
+title: The title of the poll.
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+options: A list of options for the poll.
+
+startDate: The start date of the poll.
+
+endDate: The end date of the poll.
+
+onOptionSelected: A callback function that is called when an option is selected.
+
+voteStream: A stream controller for handling vote updates.
+
+- Additional Parameters
+
+allowReselection: Whether users can reselect an option after voting.
+
+showPercentages: Whether to display the percentage of votes for each option.
+
+backgroundDecoration: The decoration applied to the background of the poll.
+
+heightBetweenTitleAndOptions: The height between the title and the options.
+
+votesText: The text displayed next to the vote count.
+
+createdBy: The name of the user who created the poll.
+
+userToVote: The name of the user who is allowed to vote.
+
+private: Whether the poll is private.
+
+loadingWidget: The widget to display while the poll is loading.
+
+allStyle: The styles to apply to the poll.
+
+maximumOptions: The maximum number of options allowed in the poll.
+
+height: The height of the poll widget.
+
+width: The width of the poll widget.
+
+showTimer: Whether to show a timer for the poll duration.
