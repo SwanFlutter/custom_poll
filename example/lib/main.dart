@@ -192,8 +192,10 @@ class _HomePageState extends State<HomePage> {
                       votedProgressColor: Colors.blue,
                       leadingVotedProgessColor: Colors.blueAccent,
                       votedBackgroundColor: const Color(0xffEEF0EB),
-                      votedPercentageTextStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      votesTextStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      votedPercentageTextStyle: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                      votesTextStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ],
