@@ -186,7 +186,7 @@ To use this package, add custom_poll as a dependency in your pubspec.yaml file.
 
 ```yaml
 dependencies:
-  custom_poll: ^1.0.0
+  custom_poll: ^0.0.1
 ```
 Then, import the package in your Dart code:
 
@@ -213,11 +213,6 @@ class _MyPageState extends State<MyPage> {
       // Send vote data to the server
       _sendToServer(voteData);
     });
-  }
-
-  void _handleVoteChange() {
-    final voteData = voteNotifier.value;
-    _sendToServer(voteData);
   }
 
   @override
